@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Narmada Bhawan Girls PG — Registration Form</title>
+<style>
+  :root{
+    --pine:#1F3A34;
+    --pine-dark:#142722;
+    --paper:#FBF8F2;
+    --paper-card:#FFFFFF;
+    --brass:#B8863B;
+    --ink:#22201B;
+    --ink-soft:#5B5648;
+    --line:#DED6C3;
+    --error:#A13D2B;
+    --ok:#2F6B4F;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',-apple-system,'Segoe UI',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{font-family:'Lora',Georgia,serif;}
+
+  .plate{
+    background:var(--pine);
+    color:var(--paper);
+    padding:28px 20px 24px;
+    text-align:center;
+    border-bottom:4px solid var(--brass);
+  }
+  .plate .mark{
+    width:46px;height:46px;border:2px solid var(--brass);border-radius:50%;
+    margin:0 auto 12px;display:flex;align-items:center;justify-content:center;
+    font-family:'Lora',serif;font-size:20px;color:var(--brass);
+  }
+  .plate h1{margin:0 0 4px;font-size:24px;font-weight:600;letter-spacing:.3px;}
+  .plate .hin{font-size:15px;opacity:.85;margin:0 0 10px;}
+  .plate .addr{font-size:12.5px;opacity:.75;margin:0;line-height:1.5;}
+
+  .wrap{max-width:560px;margin:0 auto;padding:18px 16px 60px;}
+
+  .section{
+    background:var(--paper-card);
+    border:1px solid var(--line);
+    border-radius:4px;
+    margin-bottom:16px;
+    overflow:hidden;
+  }
+  .section-head{
+    display:flex;align-items:baseline;gap:10px;
+    padding:14px 16px 10px;
+    border-bottom:1px solid var(--line);
+  }
+  .section-head .num{
+    font-family:'Lora',serif;color:var(--brass);font-size:15px;font-weight:600;
+  }
+  .section-head h2{font-size:16px;margin:0;font-weight:600;}
+  .section-head .hin{font-size:12.5px;color:var(--ink-soft);margin-left:auto;}
+  .section-body{padding:14px 16px 18px;}
+
+  label{display:block;font-size:13.5px;font-weight:600;margin:14px 0 3px;}
+  label .hin{font-weight:400;color:var(--ink-soft);font-size:12px;}
+  label:first-child{margin-top:0;}
+  input[type=text],input[type=tel],input[type=date],textarea{
+    width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:3px;
+    font-size:14.5px;font-family:inherit;background:#fff;color:var(--ink);
+  }
+  input:focus,textarea:focus{outline:2px solid var(--pine);outline-offset:1px;border-color:var(--pine);}
+  textarea{resize:vertical;min-height:64px;}
+  .req{color:var(--error);}
+  .err-msg{color:var(--error);font-size:12px;margin-top:4px;display:none;}
+  .field-err input,.field-err textarea{border-color:var(--error);}
+  .field-err .err-msg{display:block;}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:0 12px;}
+
+  .upload-box{
+    border:1.5px dashed var(--line);border-radius:4px;padding:14px;text-align:center;
+    background:#FBF9F4;position:relative;margin-top:6px;
+  }
+  .upload-box.filled{border-style:solid;border-color:var(--ok);}
+  .upload-box input[type=file]{
+    position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
+  }
+  .upload-box .label-txt{font-size:13px;color:var(--ink-soft);}
+  .upload-box .label-txt b{color:var(--ink);display:block;font-size:13.5px;margin-bottom:2px;}
+  .preview{margin-top:10px;max-width:140px;max-height:140px;border-radius:3px;border:1px solid var(--line);display:none;}
+
+  .rules-box{
+    max-height:230px;overflow-y:auto;border:1px solid var(--line);border-radius:3px;
+    padding:12px 13px;background:#FBF9F4;font-size:12.8px;line-height:1.6;
+  }
+  .rules-box ol{margin:0;padding-left:18px;}
+  .rules-box li{margin-bottom:9px;}
+  .rules-box b{color:var(--pine-dark);}
+
+  .agree-row{display:flex;gap:10px;align-items:flex-start;margin-top:14px;}
+  .agree-row input{width:18px;height:18px;margin-top:2px;flex-shrink:0;}
+  .agree-row span{font-size:13.3px;line-height:1.5;}
+
+  .submit-btn{
+    width:100%;padding:15px;background:var(--pine);color:#fff;border:none;border-radius:4px;
+    font-size:15.5px;font-weight:600;font-family:'Lora',serif;cursor:pointer;margin-top:6px;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .submit-btn:active{background:var(--pine-dark);}
+  .submit-btn:disabled{opacity:.5;cursor:not-allowed;}
+
+  .note{font-size:12px;color:var(--ink-soft);text-align:center;margin-top:10px;line-height:1.5;}
+
+
+  input[type=tel]{inputmode:numeric;}
+  input[type=file]{touch-action:manipulation;}
+  .field-err input,.field-err textarea{border-color:var(--error)!important;outline:none;}
+  .field-err .err-msg{display:block;}
+  .upload-box:focus-within{border-color:var(--pine);outline:2px solid var(--pine);outline-offset:1px;}
+  .submit-btn.loading{cursor:wait;opacity:.7;}
+  @media (max-width:420px){
+    .two-col{grid-template-columns:1fr;}
+    .plate{padding:24px 16px 20px;}
+    .plate h1{font-size:22px;}
+    .wrap{padding-left:12px;padding-right:12px;}
+  }
+
+  /* confirmation screen */
+  .confirm{display:none;text-align:center;padding:40px 20px 60px;max-width:480px;margin:0 auto;}
+  .confirm .tick{
+    width:56px;height:56px;border-radius:50%;background:var(--ok);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 18px;
+  }
+  .confirm h2{margin:0 0 8px;}
+  .confirm p{color:var(--ink-soft);font-size:14px;line-height:1.6;}
+  .wa-btn{
+    display:inline-flex;align-items:center;gap:8px;background:#2F6B4F;color:#fff;
+    padding:14px 22px;border-radius:4px;text-decoration:none;font-weight:600;margin-top:18px;font-size:14.5px;
+  }
+  .confirm .imgnote{
+    background:#FFF7E8;border:1px solid var(--brass);border-radius:4px;padding:12px 14px;
+    font-size:12.8px;text-align:left;margin-top:18px;color:#6B5220;line-height:1.6;
+  }
+  .again{margin-top:20px;font-size:13px;color:var(--pine);text-decoration:underline;background:none;border:none;cursor:pointer;}
+
+  #adminLink{
+    display:block;text-align:center;font-size:11px;color:var(--line);margin-top:6px;
+    text-decoration:none;
+  }
+</style>
+</head>
+<body>
+
+<div class="plate">
+  <div class="mark">NB</div>
+  <h1>Narmada Bhawan Girls PG</h1>
+  <p class="hin">रेजिडेंट रजिस्ट्रेशन फॉर्म</p>
+  <p class="addr">B-135, Shirdipuram, Near JK Hospital, Kolar Road, Bhopal</p>
+</div>
+
+<form class="wrap" id="pgForm" novalidate>
+
+  <!-- SECTION 1: PERSONAL DETAILS -->
+  <div class="section">
+    <div class="section-head">
+      <span class="num">1</span><h2>Student Details</h2><span class="hin">व्यक्तिगत विवरण</span>
+    </div>
+    <div class="section-body">
+      <label>Full Name <span class="req">*</span> <span class="hin">(पूरा नाम)</span></label>
+      <input type="text" id="name" required>
+      <div class="err-msg">कृपया नाम दर्ज करें</div>
+
+      <div class="two-col">
+        <div>
+          <label>Date of Birth <span class="req">*</span></label>
+          <input type="date" id="dob" required>
+          <div class="err-msg">जन्मतिथि चुनें</div>
+        </div>
+        <div>
+          <label>Contact No. <span class="req">*</span></label>
+          <input type="tel" id="contact" placeholder="10-digit mobile" maxlength="10" required>
+          <div class="err-msg">10 अंकों का नंबर डालें</div>
+        </div>
+      </div>
+
+      <label>Aadhaar No. <span class="req">*</span></label>
+      <input type="text" id="aadhaar" placeholder="XXXX XXXX XXXX" maxlength="14" required>
+      <div class="err-msg">12 अंकों का आधार नंबर डालें</div>
+
+      <label>Course &amp; University / School <span class="req">*</span> <span class="hin">(कोर्स व यूनिवर्सिटी)</span></label>
+      <input type="text" id="course" required>
+      <div class="err-msg">यह भरना ज़रूरी है</div>
+
+      <label>Date of Joining PG <span class="req">*</span></label>
+      <input type="date" id="joinDate" required>
+      <div class="err-msg">जॉइनिंग डेट चुनें</div>
+
+      <label>Permanent Address <span class="req">*</span> <span class="hin">(स्थायी पता)</span></label>
+      <textarea id="address" required></textarea>
+      <div class="err-msg">पता दर्ज करें</div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: PARENT / GUARDIAN -->
+  <div class="section">
+    <div class="section-head">
+      <span class="num">2</span><h2>Parent &amp; Guardian</h2><span class="hin">अभिभावक विवरण</span>
+    </div>
+    <div class="section-body">
+      <div class="two-col">
+        <div>
+          <label>Father's Name <span class="req">*</span></label>
+          <input type="text" id="fatherName" required>
+          <div class="err-msg">भरें</div>
+        </div>
+        <div>
+          <label>Father's Contact <span class="req">*</span></label>
+          <input type="tel" id="fatherContact" maxlength="10" required>
+          <div class="err-msg">10 अंक डालें</div>
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <label>Mother's Name <span class="req">*</span></label>
+          <input type="text" id="motherName" required>
+          <div class="err-msg">भरें</div>
+        </div>
+        <div>
+          <label>Mother's Contact <span class="req">*</span></label>
+          <input type="tel" id="motherContact" maxlength="10" required>
+          <div class="err-msg">10 अंक डालें</div>
+        </div>
+      </div>
+      <label>Local Guardian Name &amp; Contact <span class="hin">(यदि हो)</span></label>
+      <input type="text" id="guardian" placeholder="Name — Contact number">
+    </div>
+  </div>
+
+  <!-- SECTION 3: PHOTO / ID -->
+  <div class="section">
+    <div class="section-head">
+      <span class="num">3</span><h2>Photo &amp; ID Proof</h2><span class="hin">फोटो व दस्तावेज़</span>
+    </div>
+    <div class="section-body">
+      <label>Resident's Photo <span class="req">*</span></label>
+      <div class="upload-box" id="box-photo">
+        <input type="file" accept="image/*" capture="environment" id="photoFile">
+        <div class="label-txt"><b>Tap to take / upload photo</b>फोटो अपलोड करें</div>
+      </div>
+      <img class="preview" id="prev-photo">
+      <div class="err-msg" id="err-photo">कृपया फोटो अपलोड करें</div>
+
+      <label style="margin-top:18px;">Aadhaar Card (front side) <span class="req">*</span></label>
+      <div class="upload-box" id="box-aadhaar">
+        <input type="file" accept="image/*" capture="environment" id="aadhaarFile">
+        <div class="label-txt"><b>Tap to take / upload photo</b>आधार कार्ड की फोटो</div>
+      </div>
+      <img class="preview" id="prev-aadhaar">
+      <div class="err-msg" id="err-aadhaar">कृपया आधार कार्ड की फोटो अपलोड करें</div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: AGREEMENT -->
+  <div class="section">
+    <div class="section-head">
+      <span class="num">4</span><h2>Tenant Agreement</h2><span class="hin">नियम व शर्तें</span>
+    </div>
+    <div class="section-body">
+      <div class="rules-box">
+        <ol>
+          <li><b>Respectful Conduct:</b> All residents shall maintain discipline, dignity and courteous behaviour. Ragging, harassment, bullying or misconduct is strictly prohibited.</li>
+          <li><b>Timely Payment of Fees:</b> Monthly accommodation fee and maintenance charge must be paid between the 1st and 10th of every month. Late fee ₹50/day after due date.</li>
+          <li><b>Maintenance Charge:</b> A monthly maintenance charge of ₹200 applies in addition to the hostel fee.</li>
+          <li><b>Cleanliness &amp; Hygiene:</b> Keep rooms and common areas clean; dispose of waste only in designated bins.</li>
+          <li><b>Care of Property:</b> Hostel property, furniture and appliances must be used with care. Damage due to negligence will be recovered from the resident.</li>
+          <li><b>Personal Belongings:</b> Residents are responsible for their own valuables; management is not liable for loss or theft.</li>
+          <li><b>Entry &amp; Exit Register:</b> Mandatory to record entry/exit at the gate.</li>
+          <li><b>Gate Timings:</b> Gate closes at 9:30 PM. Late return needs prior permission and parent/guardian info.</li>
+          <li><b>Visitors:</b> Allowed only during permitted hours in designated areas. Male visitors not allowed in rooms.</li>
+          <li><b>Prohibited Substances:</b> Alcohol, narcotics, tobacco or any illegal substance is strictly forbidden on premises.</li>
+          <li><b>Electrical &amp; Fire Safety:</b> No unauthorised high-power appliances, unsafe wiring or candles. Switch off appliances when leaving the room.</li>
+          <li><b>Noise &amp; Disturbance:</b> Loud music or activity disturbing other residents is prohibited, especially during quiet hours.</li>
+          <li><b>Room Occupancy:</b> Occupy only the allotted room/bed. Subletting is not permitted without written approval.</li>
+          <li><b>Alterations:</b> No drilling, painting or structural/electrical changes without permission.</li>
+          <li><b>Safety &amp; Emergencies:</b> Report any security concern, accident, medical emergency or hazard to management immediately.</li>
+          <li><b>Vacating the Room:</b> Give at least 30 days' notice before vacating, otherwise the security deposit will not be refunded.</li>
+          <li><b>Compliance:</b> Management may take disciplinary action, including termination of stay, for rule violations.</li>
+          <li><b>Final Authority:</b> Management's decision on all matters of boarding, residence and discipline is final and binding.</li>
+        </ol>
+      </div>
+
+      <label style="margin-top:16px;">Type your full name as digital signature <span class="req">*</span></label>
+      <input type="text" id="signature" placeholder="e.g. Priya Sharma" required>
+      <div class="err-msg">हस्ताक्षर के लिए नाम टाइप करें</div>
+
+      <div class="agree-row">
+        <input type="checkbox" id="agree">
+        <span>I have read and understood all 18 rules above and agree to be bound by them during my stay. <br><span style="color:var(--ink-soft);">मैंने ऊपर दिए सभी नियम पढ़ लिए हैं और मानने के लिए सहमत हूं।</span></span>
+      </div>
+      <div class="err-msg" id="err-agree">आगे बढ़ने के लिए सहमति दें</div>
+    </div>
+  </div>
+
+  <button type="submit" class="submit-btn">Submit Form — फॉर्म जमा करें</button>
+  <p class="note">Submitting will open WhatsApp with your filled details.<br>You'll then attach your two photos in the same chat before sending.</p>
+</form>
+
+<!-- CONFIRMATION SCREEN -->
+<div class="confirm" id="confirmScreen">
+  <div class="tick">✓</div>
+  <h2 class="serif">Almost done!</h2>
+  <p>WhatsApp खुल गया है। भेजने से पहले नीचे दिए बटन से अपनी <b>दो फोटो</b> (रेजिडेंट फोटो + आधार कार्ड) उसी चैट में अटैच कर दें, फिर भेजें।</p>
+  <a href="#" class="wa-btn" id="waBtnAgain">Open WhatsApp again</a>
+  <div class="imgnote">
+    📎 <b>Reminder:</b> WhatsApp message text pre-fills automatically, but photos must be attached manually in the chat — tap the ➕ or 📎 icon in WhatsApp and select your saved photos.
+  </div>
+  <button class="again" id="fillAnother">Fill another form</button>
+</div>
+
+<a href="#" id="adminLink">·</a>
+
+<script>
+(function(){
+  // ====== EDIT THIS: owner's WhatsApp number, country code + number, no + or spaces ======
+  const OWNER_WHATSAPP = "91XXXXXXXXXX";
+  // =========================================================================================
+
+  const form = document.getElementById('pgForm');
+  const confirmScreen = document.getElementById('confirmScreen');
+
+  const $ = id => document.getElementById(id);
+  const digitsOnly = value => value.replace(/\D/g, '');
+
+  function setError(el, show) {
+    const field = el.closest('div');
+    if (field) field.classList.toggle('field-err', show);
+  }
+
+  function setupUpload(boxId, fileId, prevId, errId) {
+    const box = $(boxId);
+    const input = $(fileId);
+    const prev = $(prevId);
+    const err = $(errId);
+
+    input.addEventListener('change', () => {
+      const file = input.files && input.files[0];
+      if (!file) return;
+
+      const allowed = file.type.startsWith('image/');
+      const maxSize = 8 * 1024 * 1024; // 8 MB
+
+      if (!allowed || file.size > maxSize) {
+        input.value = '';
+        box.classList.remove('filled');
+        prev.style.display = 'none';
+        err.textContent = !allowed
+          ? 'कृपया केवल फोटो अपलोड करें'
+          : 'फोटो 8 MB से कम होनी चाहिए';
+        err.style.display = 'block';
+        return;
+      }
+
+      box.classList.add('filled');
+      err.style.display = 'none';
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        prev.src = e.target.result;
+        prev.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  setupUpload('box-photo','photoFile','prev-photo','err-photo');
+  setupUpload('box-aadhaar','aadhaarFile','prev-aadhaar','err-aadhaar');
+
+  function formatAadhaar(input) {
+    const digits = digitsOnly(input.value).slice(0, 12);
+    input.value = digits.replace(/(\d{4})(?=\d)/g, '$1 ').trim();
+  }
+
+  function setupNumericField(id, maxLength) {
+    const input = $(id);
+    input.addEventListener('input', () => {
+      input.value = digitsOnly(input.value).slice(0, maxLength);
+    });
+  }
+
+  setupNumericField('contact', 10);
+  setupNumericField('fatherContact', 10);
+  setupNumericField('motherContact', 10);
+  $('aadhaar').addEventListener('input', e => formatAadhaar(e.target));
+
+  function buildMessage() {
+    const v = id => $(id).value.trim();
+    return `*Narmada Bhawan Girls PG — New Registration*
+
+*Name:* ${v('name')}
+*DOB:* ${v('dob')}
+*Contact:* ${v('contact')}
+*Aadhaar No:* ${v('aadhaar')}
+*Course/University:* ${v('course')}
+*Date of Joining:* ${v('joinDate')}
+*Permanent Address:* ${v('address')}
+
+*Father:* ${v('fatherName')} — ${v('fatherContact')}
+*Mother:* ${v('motherName')} — ${v('motherContact')}
+*Local Guardian:* ${v('guardian') || '-'}
+
+*Signature (typed):* ${v('signature')}
+*Agreement:* Rules read & accepted ✅
+
+_(Resident photo & Aadhaar photo to follow in this chat)_`;
+  }
+
+  function waLink() {
+    const number = OWNER_WHATSAPP.replace(/\D/g, '');
+    return "https://wa.me/" + number + "?text=" + encodeURIComponent(buildMessage());
+  }
+
+  function validate() {
+    let valid = true;
+
+    const requiredIds = [
+      'name','dob','contact','aadhaar','course','joinDate','address',
+      'fatherName','fatherContact','motherName','motherContact','signature'
+    ];
+
+    requiredIds.forEach(id => {
+      const el = $(id);
+      const missing = !el.value.trim();
+      setError(el, missing);
+      if (missing) valid = false;
+    });
+
+    const phoneIds = ['contact','fatherContact','motherContact'];
+    phoneIds.forEach(id => {
+      const el = $(id);
+      if (el.value && !/^\d{10}$/.test(el.value)) {
+        setError(el, true);
+        valid = false;
+      }
+    });
+
+    const aadhaar = $('aadhaar');
+    const aadhaarDigits = digitsOnly(aadhaar.value);
+    if (aadhaar.value && !/^\d{12}$/.test(aadhaarDigits)) {
+      setError(aadhaar, true);
+      valid = false;
+    }
+
+    if (!$('photoFile').files[0]) {
+      $('err-photo').textContent = 'कृपया फोटो अपलोड करें';
+      $('err-photo').style.display = 'block';
+      valid = false;
+    }
+
+    if (!$('aadhaarFile').files[0]) {
+      $('err-aadhaar').textContent = 'कृपया आधार कार्ड की फोटो अपलोड करें';
+      $('err-aadhaar').style.display = 'block';
+      valid = false;
+    }
+
+    if (!$('agree').checked) {
+      $('err-agree').style.display = 'block';
+      valid = false;
+    } else {
+      $('err-agree').style.display = 'none';
+    }
+
+    return valid;
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    if (!/^\d{12}$/.test(digitsOnly($('aadhaar').value))) {
+      setError($('aadhaar'), true);
+    }
+
+    if (!validate()) {
+      const firstError = form.querySelector('.field-err input, .field-err textarea, .err-msg[style*="block"]');
+      if (firstError) firstError.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+
+    const number = OWNER_WHATSAPP.replace(/\D/g, '');
+    if (number.length < 10 || OWNER_WHATSAPP.includes('X')) {
+      alert('Please set OWNER_WHATSAPP in the HTML code before using the form.');
+      return;
+    }
+
+    const submitBtn = form.querySelector('.submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.classList.add('loading');
+    submitBtn.textContent = 'Opening WhatsApp…';
+
+    const link = waLink();
+    $('waBtnAgain').href = link;
+
+    form.style.display = 'none';
+    confirmScreen.style.display = 'block';
+    window.scrollTo({top:0, behavior:'smooth'});
+
+    // Opening directly from the submit event improves compatibility with mobile browsers.
+    window.location.href = link;
+  });
+
+  $('fillAnother').addEventListener('click', function() {
+    form.reset();
+
+    document.querySelectorAll('.preview').forEach(p => {
+      p.style.display = 'none';
+      p.removeAttribute('src');
+    });
+
+    document.querySelectorAll('.upload-box').forEach(b => b.classList.remove('filled'));
+    document.querySelectorAll('.field-err').forEach(f => f.classList.remove('field-err'));
+    document.querySelectorAll('.err-msg').forEach(e => e.style.display = 'none');
+
+    const submitBtn = form.querySelector('.submit-btn');
+    submitBtn.disabled = false;
+    submitBtn.classList.remove('loading');
+    submitBtn.textContent = 'Submit Form — फॉर्म जमा करें';
+
+    confirmScreen.style.display = 'none';
+    form.style.display = 'block';
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+})();
+</script>
+
+</body>
+</html>
